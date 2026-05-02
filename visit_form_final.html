@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گزارش بازدید — سیلانه سبز</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--green:#1a3c2e;--mid:#2d6a4f;--light:#52b788;--pale:#d8f3dc;--gold:#e9c46a;--red:#e63946;--orange:#f4a261;--bg:#f0f7f4;--white:#fff;--muted:#6b7280;--radius:13px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Vazirmatn,sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px 16px;background-image:radial-gradient(circle at 20% 20%,rgba(82,183,136,.1) 0%,transparent 50%)}
+.card{background:var(--white);border-radius:20px;box-shadow:0 8px 32px rgba(26,60,46,.12);width:100%;max-width:500px}
+.header{background:linear-gradient(135deg,var(--green),var(--mid));padding:24px 28px;border-radius:20px 20px 0 0;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-30px;left:-30px;width:100px;height:100px;border-radius:50%;background:rgba(82,183,136,.15)}
+.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.logo-icon{width:40px;height:40px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.logo-text{color:#fff;font-size:17px;font-weight:700}
+.logo-sub{color:rgba(255,255,255,.6);font-size:11px}
+.header h1{color:#fff;font-size:20px;font-weight:600}
+.header p{color:rgba(255,255,255,.65);font-size:12px;margin-top:3px}
+.body{padding:24px 28px 28px}
+.field{margin-bottom:18px}
+.field.hidden{display:none}
+label{display:block;font-size:13px;font-weight:600;color:var(--green);margin-bottom:6px}
+label .req{color:var(--red);margin-right:2px}
+.info-badge{display:inline-flex;align-items:center;gap:6px;background:var(--pale);border:1px solid var(--light);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--green);font-weight:500;width:100%}
+select,input[type=text],input[type=number],textarea{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:var(--radius);font-family:Vazirmatn,sans-serif;font-size:14px;color:#1a1a2e;background:#fafafa;direction:rtl;outline:none;transition:.2s}
+select:focus,input:focus,textarea:focus{border-color:var(--light);background:#fff;box-shadow:0 0 0 3px rgba(82,183,136,.15)}
+textarea{resize:vertical;min-height:80px;line-height:1.6}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc{position:relative}
+.rc input{position:absolute;opacity:0;width:0;height:0}
+.rc label{display:flex;align-items:center;gap:8px;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:var(--radius);cursor:pointer;font-size:13px;color:var(--muted);background:#fafafa;transition:.2s;font-weight:500;min-height:48px}
+.rc input:checked + label{border-color:var(--light);background:var(--pale);color:var(--green)}
+.rc input#r_no:checked + label{border-color:var(--red);background:#fff0f0;color:#c1121f}
+.rc input#r_followup:checked + label{border-color:var(--orange);background:#fff8f0;color:#e07b39}
+.rc input#r_noaccess:checked + label{border-color:#adb5bd;background:#f8f9fa;color:#495057}
+.divider{height:1px;background:linear-gradient(to left,transparent,#e2e8f0,transparent);margin:4px 0 18px}
+.btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--mid),var(--green));color:#fff;border:none;border-radius:var(--radius);font-family:Vazirmatn,sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;margin-top:6px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,60,46,.3)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.success{display:none;padding:44px 28px;text-align:center}
+.success.show{display:block}
+.sicon{font-size:56px;margin-bottom:16px;animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.stitle{font-size:20px;font-weight:700;color:var(--green);margin-bottom:8px}
+.ssub{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.new-btn{padding:10px 28px;background:transparent;border:1.5px solid var(--mid);color:var(--mid);border-radius:50px;font-family:Vazirmatn,sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.new-btn:hover{background:var(--pale)}
+.hint{font-size:11px;color:var(--muted);margin-top:5px}
+select option[disabled]{color:#aaa}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="logo-row">
+      <div class="logo-icon">🌿</div>
+      <div><div class="logo-text">سیلانه سبز</div><div class="logo-sub">سیستم گزارش‌دهی میدانی</div></div>
+    </div>
+    <h1>گزارش بازدید مشتری</h1>
+    <p>لطفاً تمام فیلدهای ستاره‌دار را تکمیل کنید</p>
+  </div>
+
+  <div class="body" id="formBody">
+
+    <!-- بازاریاب -->
+    <div class="field">
+      <label>نام بازاریاب <span class="req">*</span></label>
+      <select id="sp" onchange="onSpChange()">
+        <option value="" disabled selected>انتخاب کنید...</option>
+        <option value="آتنا مشهدلو">آتنا مشهدلو</option><option value="آرش صادق زاده زنوزی">آرش صادق زاده زنوزی</option><option value="ابراهیم اکبرنواز قوشچی">ابراهیم اکبرنواز قوشچی</option><option value="امیرحسین بابائی دوچقائی">امیرحسین بابائی دوچقائی</option><option value="امیرحسین خان محمدی">امیرحسین خان محمدی</option><option value="امیررضا عباسی">امیررضا عباسی</option><option value="امیرمحمد مولائی">امیرمحمد مولائی</option><option value="امین ملازینلی">امین ملازینلی</option><option value="انسیه جهانی">انسیه جهانی</option><option value="ایوب طلایی علیشاه">ایوب طلایی علیشاه</option><option value="حامد صادقی هجران دوست">حامد صادقی هجران دوست</option><option value="حبیب علائی ثمرین">حبیب علائی ثمرین</option><option value="حسین علی بخشی">حسین علی بخشی</option><option value="حسین مولایی">حسین مولایی</option><option value="حمیدرضا سخاوی">حمیدرضا سخاوی</option><option value="دانیال نظری">دانیال نظری</option><option value="داود مددی">داود مددی</option><option value="دنیا ایزدکیا">دنیا ایزدکیا</option><option value="رضا توکلی صائب">رضا توکلی صائب</option><option value="رضا نادری">رضا نادری</option><option value="زهرا اصغری">زهرا اصغری</option><option value="سجاد همتی رشت آبادی">سجاد همتی رشت آبادی</option><option value="سید داود حسینی منفرد">سید داود حسینی منفرد</option><option value="سیدمحسن موسوی باریکرسف">سیدمحسن موسوی باریکرسف</option><option value="سیما بابازاده فرخران">سیما بابازاده فرخران</option><option value="شقایق غلامعلی">شقایق غلامعلی</option><option value="شهره صفارشرق">شهره صفارشرق</option><option value="عماد شاملو">عماد شاملو</option><option value="مبین متقی نهزمی">مبین متقی نهزمی</option><option value="مجید واحدی">مجید واحدی</option><option value="محمد امیر جانی خالدی">محمد امیر جانی خالدی</option><option value="محمد قرائی">محمد قرائی</option><option value="محمدرضا ملکشاهی">محمدرضا ملکشاهی</option><option value="محمود شیدائی">محمود شیدائی</option><option value="مرتضی تن آرای">مرتضی تن آرای</option><option value="مرتضی رنجبر نخودچری">مرتضی رنجبر نخودچری</option><option value="مریم گل محمدی">مریم گل محمدی</option><option value="معین آجرلو">معین آجرلو</option><option value="مهدی حاجی حسن">مهدی حاجی حسن</option><option value="مهدی نوردیده شمامی">مهدی نوردیده شمامی</option><option value="مهسا مجیدی">مهسا مجیدی</option><option value="میرحسن سیدی عبابیگلو">میرحسن سیدی عبابیگلو</option><option value="میلاد کندری فرد">میلاد کندری فرد</option><option value="هاشم بیگی">هاشم بیگی</option><option value="هانیه پورصفر">هانیه پورصفر</option><option value="هلیا فریدی">هلیا فریدی</option><option value="پیام رفیعی فرد">پیام رفیعی فرد</option><option value="کاوه بلوچی">کاوه بلوچی</option><option value="کیوان الحانی">کیوان الحانی</option>
+      </select>
+    </div>
+
+    <!-- مدیر + سرپرست (خودکار) -->
+    <div class="field hidden" id="infoBox">
+      <label>مدیر و سرپرست</label>
+      <div class="info-badge" id="infoText">—</div>
+    </div>
+
+    <!-- نام مشتری -->
+    <div class="field" id="customerField">
+      <label>نام مشتری <span class="req">*</span></label>
+      <select id="customer" disabled>
+        <option value="" disabled selected>ابتدا بازاریاب را انتخاب کنید</option>
+      </select>
+      <div class="hint" id="customerHint"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- نتیجه بازدید -->
+    <div class="field">
+      <label>نتیجه بازدید <span class="req">*</span></label>
+      <div class="result-grid">
+        <div class="rc"><input type="radio" name="result" id="r_yes" value="خرید کرد" onchange="onResultChange()"><label for="r_yes">✅ خرید کرد</label></div>
+        <div class="rc"><input type="radio" name="result" id="r_no" value="خرید نکرد" onchange="onResultChange()"><label for="r_no">❌ خرید نکرد</label></div>
+        <div class="rc"><input type="radio" name="result" id="r_followup" value="پیگیری لازم است" onchange="onResultChange()"><label for="r_followup">🔄 پیگیری لازم</label></div>
+        <div class="rc"><input type="radio" name="result" id="r_noaccess" value="دسترسی نداشتم" onchange="onResultChange()"><label for="r_noaccess">🚫 دسترسی نداشتم</label></div>
+      </div>
+    </div>
+
+    <!-- مبلغ خرید (فقط وقتی خرید کرد) -->
+    <div class="field hidden" id="amountField">
+      <label>مبلغ خرید <span class="req">*</span></label>
+      <input type="number" id="amount" placeholder="مبلغ به تومان وارد کنید">
+    </div>
+
+    <!-- علت عدم خرید (فقط وقتی خرید نکرد) -->
+    <div class="field hidden" id="reasonField">
+      <label>علت عدم خرید</label>
+      <select id="reason">
+        <option value="—" selected>—</option>
+        <option>موجودی کافی دارد</option>
+        <option>مشکل مالی / نقدینگی</option>
+        <option>رفته سراغ رقیب</option>
+        <option>نارضایتی از محصول قبلی</option>
+        <option>انبار پر است</option>
+        <option>تصمیم‌گیر غایب بود</option>
+        <option>قیمت بالاست</option>
+        <option>سایر</option>
+      </select>
+    </div>
+
+    <!-- تاریخ پیگیری (وقتی پیگیری لازم یا دسترسی نداشتم) -->
+    <div class="field hidden" id="followupField">
+      <label>کی دوباره می‌روی؟ <span class="req">*</span></label>
+      <select id="followup">
+        <option value="" disabled selected>انتخاب کنید...</option>
+        <option>فردا</option>
+        <option>۳ روز دیگر</option>
+        <option>یک هفته دیگر</option>
+      </select>
+    </div>
+
+    <!-- یادداشت -->
+    <div class="field">
+      <label>یادداشت</label>
+      <textarea id="note" placeholder="توضیحات اضافی..."></textarea>
+    </div>
+
+    <button class="btn" id="submitBtn" onclick="submitForm()">ثبت گزارش بازدید ←</button>
+  </div>
+
+  <div class="success" id="successDiv">
+    <div class="sicon">✅</div>
+    <div class="stitle">گزارش ثبت شد!</div>
+    <div class="ssub" id="successMsg">اطلاعات بازدید شما با موفقیت<br>در سیستم سیلانه سبز ذخیره شد.</div>
+    <button class="new-btn" onclick="resetForm()">+ بازدید بعدی</button>
+  </div>
+</div>
+
+<script>
+const SP_DATA = {"حمیدرضا سخاوی": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["زهرا وطن خواه", "امین اسماعیلی فانی", "متین رحمتی", "رضا لهرابیان", "جواد فاطمی انارکی", "ترانه شهبازی", "محسن حسینی", "سکینه اسودی", "مریم خزائلی", "رضا خلیلی نیا"]}, "شهره صفارشرق": {"manager": "محمد اسماعیل مقدم", "supervisor": "حمید تقی زاده", "customers": ["رضا خوانساری", "اکبر حقی داریان", "محمد شکراله زاده", "مسعود طالبی", "قادر علیپور", "حسین بهاری"]}, "آرش صادق زاده زنوزی": {"manager": "سعید قسمتی", "supervisor": "مرتضی سالاریه", "customers": ["حسین توکل", "بهداشت سلامت آذین", "عباس فراهانی", "محمد رضا محسنی", "علی حسینی", "شاهین پاکدل", "میلاد فروتن"]}, "حسین علی بخشی": {"manager": "سعید قسمتی", "supervisor": "ساسان محمد نیای مردخه", "customers": ["علی امیدی", "محسن رجبی جهرودی", "میلاد سراجوقی", "رضا جعفری", "معصومه ابدی", "حمید رضا هریسی", "علی ابراهیمی", "میلاد صفری", "میلاد عبدالهی", "مهرداد منعمی"]}, "هاشم بیگی": {"manager": "محمد اسماعیل مقدم", "supervisor": "سعید زمانیان", "customers": ["نفیسه بابامرادی", "جهان فراهانی", "مالک آخوندی"]}, "محمد قرائی": {"manager": "سعید قسمتی", "supervisor": "ساسان محمد نیای مردخه", "customers": ["علی دریانی", "موسسه خیریه حمایت از بیماران پوستی", "قهرمان اصغری نظری", "محسن موسوی", "سیامک سنگین آبادی", "محسن موسوی"]}, "معین آجرلو": {"manager": "محمد افشار", "supervisor": "محمد افشار", "customers": ["هاشم شریفی", "احمد اسدی"]}, "کاوه بلوچی": {"manager": "سعید قسمتی", "supervisor": "میلاد کلانتری", "customers": ["حمید ناطق فصیحی", "امیر مسافری", "آرش نقی زاده رازلیقی"]}, "امین ملازینلی": {"manager": "محمد اسماعیل مقدم", "supervisor": "حمید تقی زاده", "customers": ["فرید ساعدی نیا", "سید مهدی منتظری", "جمال مهدوی", "کمال رضایی", "وحید مولا اسماعیلی"]}, "ابراهیم اکبرنواز قوشچی": {"manager": "محمد حسام خانی", "supervisor": "امیر حمزه پور", "customers": ["سنبل بدری", "شکوه السادات موسوی", "شادی رحمانیان", "هلیا احمدی مقدم", "مهدیه احمدی", "نکیسا علائی", "آتوسا ضیایی", "علی بیوک آقازاده", "الهام بهشتی"]}, "امیررضا عباسی": {"manager": "سعید قسمتی", "supervisor": "مرتضی سالاریه", "customers": ["حمید اسمعیل زاده", "اسماعیل رجایی دوست", "فرشاد حیدری داراب", "محمد افتخاری بخشایش", "امیر آقایی", "محمد علی کریمی", "سعید نازنینی", "میلاد مهرعلی", "رامین رعیت"]}, "میلاد کندری فرد": {"manager": "سعید قسمتی", "supervisor": "میلاد کلانتری", "customers": ["علی گودرزی", "مرتضی وکیلی", "علی مطلق"]}, "سیدمحسن موسوی باریکرسف": {"manager": "محمد اسماعیل مقدم", "supervisor": "حمید تقی زاده", "customers": ["زهرا مهین زارع", "سامان رئوفی"]}, "زهرا اصغری": {"manager": "سعید قسمتی", "supervisor": "ساسان محمد نیای مردخه", "customers": ["محمدرضا هاشمی اعلم", "شرکت تروتمیز پایا", "علی امیری", "مرتضی امین پور", "فرشید پروشات"]}, "دانیال نظری": {"manager": "سعید قسمتی", "supervisor": "ساسان محمد نیای مردخه", "customers": ["محسن بصیری داریان", "حسام روشن افروز", "میلاد عراقی", "مجید کامیاب شندی", "حسین پایدار", "حامد مرادی", "رضا مدنی", "فرهاد امینی", "حسن قره یخه", "یوسف جواهر", "شهرام داوودی", "میلاد فرقانی", "احسان جلالی", "رضا شیخان", "بهنام جاوید", "سجاد استاد محمدی", "حمید فکری", "محمد اصغر زاده", "حیدر نعمتی کهنه شهری", "میلاد  مهدوی", "علی دهقانی", "مجید مقدسی", "سجاد یحیی پور", "پارسان رسان کالای نوآور", "سمیر الهیاری", "مجید لطیفی", "میلاد مسلمی علیشاه", "صادق حسینی", "محمد تقی نجفی", "علی علیوند", "امیر حسین ایزدی", "وحید دریانی", "حسن علیشاهی", "یوسف شجاعی", "شایارضا شمس زاده", "رحیم حقویردیلو", "محمد مهدی کبیری", "امیر پورمهر", "امید خطیبی", "رضا نادری", "آرش عدالت جو", "محمد نصرالهی"]}, "شقایق غلامعلی": {"manager": "محمد حسام خانی", "supervisor": "سعید شریفیان بجستانی", "customers": ["تینا میثاقیان", "بهجت محقق", "وحید صدیقی", "عباس خیاطی", "سمیه هاشمی نژاد", "علیرضا اذانی", "نرگس اسمعیلیان", "نسیم سادات صادری", "پریسا فرهی", "مریم افشاری", "ساناز دامنی"]}, "ایوب طلایی علیشاه": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["محمد رضا ناصری", "بیمارستان صدیقه زهرا", "حمیده محمد پور", "فاطمه کنعانی", "فریبا معینی کرمانی", "محسن مجیدی", "سارا ثقفی", "ندا قلعه‌ نویی", "سهیلا برزگر صفری", "محمد رضا احمدی", "مسعود نورمحمدی", "زهرا شربت خوری", "بهراد شربت خوری"]}, "رضا نادری": {"manager": "سعید قسمتی", "supervisor": "مرتضی سالاریه", "customers": ["امیر اکبری", "محمد میرزایی", "میثم فریدنی", "مصطفی جنیدی", "حسین ابراهیمیان", "حامد عماد", "صادق ملکی", "فاطمه عطاری", "زیبا سیدی", "آذوقه سرای کویر", "زهرا یحیائی", "ملیحه صادقی گنجیه", "مهدی نوروزی", "رضا کوهی", "نبی پازوکی"]}, "مجید واحدی": {"manager": "محمد حسام خانی", "supervisor": "سعید شریفیان بجستانی", "customers": ["مرجان طوطیان قدس", "سمیه حیدری امین", "افشین شهرابی", "آزاده کبودان"]}, "کیوان الحانی": {"manager": "محمد حسام خانی", "supervisor": "سعید شریفیان بجستانی", "customers": ["مجید محروقی", "مهسا روحی", "شهاب‌ الدین زرگر", "مهتاب حدادگر اصفهانی", "آرمان پاکدامن عدل", "امیر علی اسمعیل پور", "مریم مهرآزی", "پریسا مقدم"]}, "آتنا مشهدلو": {"manager": "محمد اسماعیل مقدم", "supervisor": "حمید تقی زاده", "customers": ["احمد محمدپور"]}, "حبیب علائی ثمرین": {"manager": "محمد اسماعیل مقدم", "supervisor": "حمید تقی زاده", "customers": ["حمید سلمانی", "مهدی بهزادی", "امین شیخی"]}, "محمد امیر جانی خالدی": {"manager": "محمد حسام خانی", "supervisor": "امیر حمزه پور", "customers": ["محمدرضا یوسفی", "مهرتابان هونام ایرانیان", "ارشیا خانی", "هادی علیرضائی", "لیلا حسنی اصل"]}, "انسیه جهانی": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["محمد خدادادی", "منوچهر سعیدزاده", "فاطمه عمیدی پور", "مریم شکرچی", "سپیده زمردی", "آرا ویستا گستر نیک نام", "منصور خرسند", "مریم روانبخش", "سپیده مهدوی"]}, "مهدی نوردیده شمامی": {"manager": "محمد اسماعیل مقدم", "supervisor": "حمید تقی زاده", "customers": ["گروه آبادگران یک نو اندیش رستاک ارس", "علی عاتفی", "امیر بنی سعید", "هادی منصور فلاح", "رقیه مهمان نواز", "پریا حقی میرکوهی سلطان"]}, "امیرمحمد مولائی": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["آریان گستر داروی پارسه", "مرجان ایزدی", "فاطمه مشاری", "انسیه مقدسی", "اصلان کریم پور", "هنگامه غلامی نعیمی", "تورج  غریب زاده"]}, "امیرحسین خان محمدی": {"manager": "محمد اسماعیل مقدم", "supervisor": "سعید زمانیان", "customers": ["مارون فراز ماهان", "داوود سمیعی نژاد", "اسماعیل عسگری"]}, "محمود شیدائی": {"manager": "سعید قسمتی", "supervisor": "میلاد کلانتری", "customers": ["رامین عصمتی", "علی یوسفی"]}, "حامد صادقی هجران دوست": {"manager": "سعید قسمتی", "supervisor": "مرتضی سالاریه", "customers": ["رسول ابوحمزه", "امیر حسین تکریم", "امیر فدائی", "مهدی شمشیریان", "مصطفی پاکدل", "اسلام سلمان زاده", "علی حسن نژاد ایردموسی"]}, "مریم گل محمدی": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["سهامی خاص پخش آفتاب عالم تاب", "طاهره گواهی", "منصور صادقی", "بهاره عبدالهی", "تجهیز گستر ثامن", "نازنین پیرایش"]}, "داود مددی": {"manager": "محمد اسماعیل مقدم", "supervisor": "سعید زمانیان", "customers": ["حمید شیخی", "علی حمیدی", "مهدی رحمتی", "توسعه فروشگاههای پیوند", "محمد مهدی میرزایی", "محمد محمدی", "محمد یافتیان"]}, "رضا توکلی صائب": {"manager": "محمد حسام خانی", "supervisor": "امیر حمزه پور", "customers": ["سایه مجذوب زنجانی", "عزیز نقره ئیان", "جعفر جودی", "باقر علی نژاد", "نصیر شاهرخی نژاد", "کیوان بزرگی نیا", "اسماعیل مهران فر", "فاطمه فخیمی", "شمس السادات پاکسرشت", "مصطفی حسن زاده", "هانیده بادامچی"]}, "مرتضی رنجبر نخودچری": {"manager": "سعید قسمتی", "supervisor": "میلاد کلانتری", "customers": ["جوزف قازاریان", "حسین قاسمی نژاد", "میثم مهرجو", "غلامرضا محسنی هماکرانی", "محمد بابازاده", "میثم یوسفی"]}, "مبین متقی نهزمی": {"manager": "محمد اسماعیل مقدم", "supervisor": "سعید زمانیان", "customers": ["جعفر معمر"]}, "دنیا ایزدکیا": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["نوشین آذرکیوان", "یاسین رشیدی", "محیا محمدی", "برسام طب پاسارگاد"]}, "سیما بابازاده فرخران": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["یسنا به منش", "امیر فخری", "آزاده زیاری", "زهرا خسروی", "امیر حسین آبادی فراهانی", "پرویز منظوری"]}, "هلیا فریدی": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["سیامک افاضلی", "سلیمان فرزاد", "محمود طاهری", "بهرام غفوری", "ساسان کلانتری"]}, "امیرحسین بابائی دوچقائی": {"manager": "محمد حسام خانی", "supervisor": "امیر حمزه پور", "customers": ["نسرین گرانمایه کاشانی"]}, "سید داود حسینی منفرد": {"manager": "محمد اسماعیل مقدم", "supervisor": "سعید زمانیان", "customers": ["سگال مد آرا", "میلاد عرب مفرد نیاسری", "نوید بارمان تجارت امید", "فرشاد غلامی"]}, "هانیه پورصفر": {"manager": "محمد افشار", "supervisor": "محمد افشار", "customers": ["محسن میرطاهری", "فرزانه کاظم زادگان", "محمد متولی", "فرهاد نمازی", "محمدحسین متولی باشی"]}, "مرتضی تن آرای": {"manager": "محمد حسام خانی", "supervisor": "سعید شریفیان بجستانی", "customers": ["فاطمه یعقوبی", "عزیز فرخی", "مریم بیدگلی", "شیما باستانی", "تکتم هنرور", "مجید جعفری فرشمی", "بابک غلامی", "صبور میرزاجانی", "اردشیر فتاحی", "فرخنده مستوفی", "مرضیه اقایی", "شهره سهرابی"]}, "عماد شاملو": {"manager": "محمد حسام خانی", "supervisor": "سعید شریفیان بجستانی", "customers": ["مینا مینایی", "سودابه بهزادپور", "مهدی محمدی", "هدی تیجانی", "نجیمه ابراهیمی", "یاسمن قنبری", "زهرا حیدری"]}, "مهدی حاجی حسن": {"manager": "سعید قسمتی", "supervisor": "مرتضی سالاریه", "customers": ["سکینه کرمی", "میلاد شریفی", "هادی محمدی", "محمد سلیمانی درباغی"]}, "مهسا مجیدی": {"manager": "عباس یاقوتی", "supervisor": "عباس یاقوتی", "customers": ["مهدی صدیقی چافجیری", "بهاره اقبالی", "معصومه سادات صالحی", "سونیا میر فخرایی", "نسترن حیدرزاده"]}, "محمدرضا ملکشاهی": {"manager": "سعید قسمتی", "supervisor": "مرتضی سالاریه", "customers": ["محسن آزاد", "مهدی آبسردی", "سید احمد تقوی", "سید مهران حسینی"]}, "میرحسن سیدی عبابیگلو": {"manager": "سعید قسمتی", "supervisor": "ساسان محمد نیای مردخه", "customers": ["قاسم سراجوقی", "میثم رفعت", "علی منتظمی تجدد"]}, "سجاد همتی رشت آبادی": {"manager": "سعید قسمتی", "supervisor": "میلاد کلانتری", "customers": ["افشار شهباززاده", "مرتضی صالحانی", "عباس زارع", "احمد صدیقی", "محمد حسینی", "حسین فضلی", "شهاب گلستان"]}, "حسین مولایی": {"manager": "محمد حسام خانی", "supervisor": "سعید شریفیان بجستانی", "customers": ["نازیلا حسن زاده", "مرتضی حسینی", "علی افتخاری", "فریبا قهرمانی", "محمد میرزایی"]}, "پیام رفیعی فرد": {"manager": "محمد حسام خانی", "supervisor": "امیر حمزه پور", "customers": ["حسین عزیزآبادی", "کیمیا شوقیان", "رضا فیوض یوسفی", "مریم مستعلی", "نگین معین البکا طوسی"]}};
+
+function onSpChange() {
+  const sp = document.getElementById('sp').value;
+  const info = SP_DATA[sp];
+  if (!info) return;
+
+  // نمایش مدیر و سرپرست
+  document.getElementById('infoBox').classList.remove('hidden');
+  document.getElementById('infoText').textContent = '🏢 ' + info.manager + '  |  👥 ' + info.supervisor;
+
+  // پر کردن dropdown مشتریان
+  const sel = document.getElementById('customer');
+  sel.innerHTML = '<option value="" disabled selected>انتخاب کنید (' + info.customers.length + ' مشتری)</option>';
+  info.customers.sort().forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+  sel.disabled = false;
+  document.getElementById('customerHint').textContent = '⚡ ' + info.customers.length + ' مشتری غیرفعال برای این بازاریاب';
+}
+
+function onResultChange() {
+  const val = document.querySelector('input[name=result]:checked')?.value;
+  document.getElementById('amountField').classList.toggle('hidden', val !== 'خرید کرد');
+  document.getElementById('reasonField').classList.toggle('hidden', val !== 'خرید نکرد');
+  const needFollowup = val === 'پیگیری لازم است' || val === 'دسترسی نداشتم';
+  document.getElementById('followupField').classList.toggle('hidden', !needFollowup);
+}
+
+async function submitForm() {
+  const sp = document.getElementById('sp').value;
+  const customer = document.getElementById('customer').value;
+  const result = document.querySelector('input[name=result]:checked')?.value;
+
+  if (!sp) { alert('⚠️ نام بازاریاب را انتخاب کنید'); return; }
+  if (!customer) { alert('⚠️ نام مشتری را انتخاب کنید'); return; }
+  if (!result) { alert('⚠️ نتیجه بازدید را انتخاب کنید'); return; }
+  if (result === 'خرید کرد' && !document.getElementById('amount').value) {
+    alert('⚠️ لطفاً مبلغ خرید را وارد کنید'); return;
+  }
+  const needFollowup = result === 'پیگیری لازم است' || result === 'دسترسی نداشتم';
+  if (needFollowup && !document.getElementById('followup').value) {
+    alert('⚠️ تاریخ پیگیری بعدی را انتخاب کنید'); return;
+  }
+
+  const info = SP_DATA[sp];
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = '⏳ در حال ثبت...';
+
+  const payload = {
+    بازاریاب: sp,
+    مدیر: info.manager,
+    سرپرست: info.supervisor,
+    نام_مشتری: customer,
+    نتیجه: result,
+    مبلغ_خرید: document.getElementById('amount').value || '—',
+    علت_عدم_خرید: document.getElementById('reason').value || '—',
+    تاریخ_پیگیری: document.getElementById('followup').value || '—',
+    یادداشت: document.getElementById('note').value || '—'
+  };
+
+  try {
+    const res = await fetch('https://aliadli8.app.n8n.cloud/webhook/visit-submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    document.getElementById('formBody').style.display = 'none';
+    document.getElementById('successMsg').innerHTML = 
+      '✅ ' + customer + '<br>با موفقیت ثبت شد.';
+    document.getElementById('successDiv').classList.add('show');
+  } catch(e) {
+    alert('❌ خطا در ارسال. اینترنت را چک کنید.');
+    btn.disabled = false; btn.textContent = 'ثبت گزارش بازدید ←';
+  }
+}
+
+function resetForm() {
+  document.getElementById('formBody').style.display = '';
+  document.getElementById('successDiv').classList.remove('show');
+  document.getElementById('sp').value = '';
+  document.getElementById('infoBox').classList.add('hidden');
+  document.getElementById('customer').innerHTML = '<option value="" disabled selected>ابتدا بازاریاب را انتخاب کنید</option>';
+  document.getElementById('customer').disabled = true;
+  document.getElementById('customerHint').textContent = '';
+  document.querySelectorAll('input[name=result]').forEach(r => r.checked = false);
+  ['amountField','reasonField','followupField'].forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById('amount').value = '';
+  document.getElementById('reason').value = '—';
+  document.getElementById('followup').value = '';
+  document.getElementById('note').value = '';
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').textContent = 'ثبت گزارش بازدید ←';
+}
+</script>
+</body>
+</html>
